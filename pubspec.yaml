@@ -1,6 +1,6 @@
 name: anim_search_bar
 description: A flutter package that has an animated search bar with loads of customization
-version: 0.0.4
+version: 0.0.5
 homepage: https://imgkl.github.io
 
 environment:

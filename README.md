@@ -1,10 +1,9 @@
 # Anim Search Bar 
 
+<img src ="https://i.ibb.co/YyPgkgg/ezgif-com-gif-maker.gif">
+
 ### Code
 <img src="https://i.ibb.co/k80JSS3/carbon.png">
-
-### Output
-<img src ="https://i.ibb.co/YyPgkgg/ezgif-com-gif-maker.gif">
 
 ## Parameters
   - width 
@@ -19,12 +18,16 @@
   -  suffixIcon 
      - Type: IconData
      - <i>Optional</i>
+     - Default: Icons.clear
   -  prefixIcon  
      - Type: IconData
      - <i>Optional</i>
+     - Default: Icons.search
   -  animationDurationInMilli 
-      - Type: int 
+     - Type: int 
      - <i>Optional</i>
+     - Default: 375 milliseconds
   -  helpText 
      - Type: String
       - <i>Optional</i>
+      - Default: Search...

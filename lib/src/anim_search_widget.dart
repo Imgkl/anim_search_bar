@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class AnimSearchBar extends StatefulWidget {
-  
   ///  width - double ,isRequired : Yes
   ///  textController - TextEditingController  ,isRequired : Yes
   ///  rtl - Boolean, isRequired : No

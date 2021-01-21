@@ -1,6 +1,10 @@
 # Anim Search Bar 
 
+#### Default
 <img src ="https://i.ibb.co/YyPgkgg/ezgif-com-gif-maker.gif">
+
+#### Expands RTL
+<img src ="https://i.ibb.co/FxMJW8K/RPReplay-Final1611222562.gif">
 
 ### Code
 <img src="https://i.ibb.co/k80JSS3/carbon.png">

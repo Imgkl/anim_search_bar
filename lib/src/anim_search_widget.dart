@@ -11,7 +11,7 @@ class AnimSearchBar extends StatefulWidget {
   ///  prefixIcon - IconData  ,isRequired : No
   ///  animationDurationInMilli -  int ,isRequired : No
   ///  helpText - String ,isRequired :  No
-  ///  rtl - Boolean, isRequired : No
+
   final double width;
   final TextEditingController textController;
   final IconData suffixIcon;

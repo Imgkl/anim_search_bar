@@ -4,12 +4,12 @@ import 'dart:math';
 class AnimSearchBar extends StatefulWidget {
   ///  width - double ,isRequired : Yes
   ///  textController - TextEditingController  ,isRequired : Yes
+  ///  rtl - Boolean, isRequired : No
   ///  onSuffixTap - Function, isRequired : Yes
   ///  suffixIcon - IconData ,isRequired :  No
   ///  prefixIcon - IconData  ,isRequired : No
   ///  animationDurationInMilli -  int ,isRequired : No
   ///  helpText - String ,isRequired :  No
-  ///  rtl - Boolean, isRequired : No
   final double width;
   final TextEditingController textController;
   final IconData suffixIcon;

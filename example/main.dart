@@ -32,6 +32,7 @@ class _AppState extends State<App> {
       /// In AnimSearchBar widget, the width, textController, onSuffixTap are required properties.
       /// You have also control over the suffixIcon, prefixIcon, helpText and animationDurationInMilli
       child: AnimSearchBar(
+        rtl: false,
         width: 400,
         textController: textController,
         onSuffixTap: () {

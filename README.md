@@ -15,6 +15,10 @@
   -  onSuffixTap 
      - Type: Function
      - <b>Required</b>
+-  rtl 
+     - Type: Boolean
+     - <i>Optional</i>
+     - Default: false
   -  suffixIcon 
      - Type: IconData
      - <i>Optional</i>

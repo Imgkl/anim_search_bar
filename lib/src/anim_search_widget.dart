@@ -9,6 +9,7 @@ class AnimSearchBar extends StatefulWidget {
   ///  prefixIcon - IconData  ,isRequired : No
   ///  animationDurationInMilli -  int ,isRequired : No
   ///  helpText - String ,isRequired :  No
+  ///  rtl - Boolean, isRequired : No
   final double width;
   final TextEditingController textController;
   final IconData suffixIcon;
@@ -16,6 +17,7 @@ class AnimSearchBar extends StatefulWidget {
   final String helpText;
   final int animationDurationInMilli;
   final onSuffixTap;
+  final bool rtl;
 
   const AnimSearchBar(
       {Key key,
@@ -31,7 +33,10 @@ class AnimSearchBar extends StatefulWidget {
 
       /// The onSuffixTap cannot be null
       @required this.onSuffixTap,
-      this.animationDurationInMilli = 375})
+      this.animationDurationInMilli = 375,
+
+      /// make the search bar to open from right to left
+      this.rtl = false})
       : assert(
           /// The width cannot be null and double.infinity
           width != null && width != double.infinity,
@@ -69,7 +74,9 @@ class _AnimSearchBarState extends State<AnimSearchBar>
   Widget build(BuildContext context) {
     return Container(
       height: 100.0,
-      alignment: Alignment(-1.0, 0.0),
+
+      ///if the rtl is true, search bar will be from right to left
+      alignment: widget.rtl ? Alignment.centerRight : Alignment(-1.0, 0.0),
 
       ///Using Animated container to expand and shrink the widget
       child: AnimatedContainer(

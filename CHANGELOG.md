@@ -1,3 +1,6 @@
+## [0.0.7]
+  * Added rtl support
+  
 ## [0.0.6] 
   *  Updated Readme
 

@@ -4,8 +4,11 @@ import 'dart:math';
 class AnimSearchBar extends StatefulWidget {
   ///  width - double ,isRequired : Yes
   ///  textController - TextEditingController  ,isRequired : Yes
-  ///  rtl - Boolean, isRequired : No
   ///  onSuffixTap - Function, isRequired : Yes
+  ///  rtl - Boolean, isRequired : No
+  ///  autoFocus - Boolean, isRequired : No
+  ///  style - TextStyle, isRequired : No
+  ///  closeSearchOnSuffixTap - bool , isRequired : No
   ///  suffixIcon - IconData ,isRequired :  No
   ///  prefixIcon - IconData  ,isRequired : No
   ///  animationDurationInMilli -  int ,isRequired : No
@@ -13,32 +16,44 @@ class AnimSearchBar extends StatefulWidget {
 
   final double width;
   final TextEditingController textController;
-  final IconData suffixIcon;
-  final IconData prefixIcon;
+  final Icon suffixIcon;
+  final Icon prefixIcon;
   final String helpText;
   final int animationDurationInMilli;
   final onSuffixTap;
   final bool rtl;
+  final bool autoFocus;
+  final TextStyle style;
+  final bool closeSearchOnSuffixTap;
 
-  const AnimSearchBar(
-      {Key key,
+  const AnimSearchBar({
+    Key key,
 
-      /// The width cannot be null
-      @required this.width,
+    /// The width cannot be null
+    @required this.width,
 
-      /// The textController cannot be null
-      @required this.textController,
-      this.suffixIcon = Icons.close,
-      this.prefixIcon = Icons.search,
-      this.helpText = "Search...",
+    /// The textController cannot be null
+    @required this.textController,
+    this.suffixIcon,
+    this.prefixIcon,
+    this.helpText = "Search...",
 
-      /// The onSuffixTap cannot be null
-      @required this.onSuffixTap,
-      this.animationDurationInMilli = 375,
+    /// The onSuffixTap cannot be null
+    @required this.onSuffixTap,
+    this.animationDurationInMilli = 375,
 
-      /// make the search bar to open from right to left
-      this.rtl = false})
-      : assert(
+    /// make the search bar to open from right to left
+    this.rtl = false,
+
+    /// make the keyboard to show automatically when the searchbar is expanded
+    this.autoFocus = false,
+
+    /// TextStyle of the contents inside the searchbar
+    this.style,
+
+    /// close the search on suffix tap
+    this.closeSearchOnSuffixTap = false,
+  })  : assert(
           /// The width cannot be null and double.infinity
           width != null && width != double.infinity,
 
@@ -58,6 +73,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
     with SingleTickerProviderStateMixin {
   ///initializing the AnimationController
   AnimationController _con;
+  FocusNode focusNode = FocusNode();
   @override
   void initState() {
     super.initState();
@@ -120,15 +136,27 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                         try {
                           ///trying to execute the onSuffixTap function
                           widget.onSuffixTap();
+
+                          ///closeSearchOnSuffixTap will execute if it's true
+                          if (widget.closeSearchOnSuffixTap) {
+                            FocusScope.of(context).unfocus();
+                            setState(() {
+                              toggle = 0;
+                            });
+                          }
                         } catch (e) {
                           ///print the error if the try block fails
                           print(e);
                         }
                       },
-                      child: Icon(
-                        widget.suffixIcon,
-                        size: 20.0,
-                      ),
+
+                      ///suffixIcon is of type Icon
+                      child: widget.suffixIcon != null
+                          ? widget.suffixIcon
+                          : Icon(
+                              Icons.close,
+                              size: 20.0,
+                            ),
                     ),
                     builder: (context, widget) {
                       ///Using Transform.rotate to rotate the suffix icon when it gets expanded
@@ -158,8 +186,14 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                   child: TextField(
                     ///Text Controller. you can manipulate the text inside this textField by calling this controller.
                     controller: widget.textController,
+                    focusNode: focusNode,
                     cursorRadius: Radius.circular(10.0),
                     cursorWidth: 2.0,
+
+                    ///style is of type TextStyle, the default is just a color black
+                    style: widget.style != null
+                        ? widget.style
+                        : TextStyle(color: Colors.black),
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -189,20 +223,38 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
                 ///if toggle is 1, which means it's open. so show the back icon, which will close it.
                 ///if the toggle is 0, which means it's closed, so tapping on it will expand the widget.
-                icon: Icon(
-                    toggle == 1 ? Icons.arrow_back_ios : widget.prefixIcon),
+                ///prefixIcon is of type Icon
+                icon: widget.prefixIcon != null
+                    ? toggle == 1
+                        ? Icon(Icons.arrow_back_ios)
+                        : widget.prefixIcon
+                    : Icon(
+                        toggle == 1 ? Icons.arrow_back_ios : Icons.search,
+                        size: 20.0,
+                      ),
                 onPressed: () {
                   setState(
                     () {
                       ///if the search bar is closed
                       if (toggle == 0) {
                         toggle = 1;
+                        setState(() {
+                          ///if the autoFocus is true, the keyboard will pop open, automatically
+                          if (widget.autoFocus)
+                            FocusScope.of(context).requestFocus(focusNode);
+                        });
 
                         ///forward == expand
                         _con.forward();
                       } else {
                         ///if the search bar is expanded
                         toggle = 0;
+
+                        ///if the autoFocus is true, the keyboard will close, automatically
+                        setState(() {
+                          if (widget.autoFocus)
+                            FocusScope.of(context).unfocus();
+                        });
 
                         ///reverse == close
                         _con.reverse();

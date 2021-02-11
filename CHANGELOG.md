@@ -1,3 +1,9 @@
+## [1.0.0]
+  * AutoFocus option is now available - when the search bar is opened, the keyboard will pop open and closes when the search bar is closed. 
+  * Added TextStyle option to the TextField
+  * Added option to close the search bar when suffixIcon is tapped.
+  * PrefixIcon and SuffixIcon is now Icon not IconData, to allow more granular customization.
+
 ## [0.0.8]
   * updated readme with rtl support
   
@@ -8,6 +14,6 @@
   *  Updated Readme
 
 ## [0.0.2]
-  * Addded examples
+  * Added examples
 
 ## [0.0.1] - Hello World.

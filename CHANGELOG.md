@@ -1,4 +1,4 @@
-## [1.0.0]
+## [1.0.1]
   * AutoFocus option is now available - when the search bar is opened, the keyboard will pop open and closes when the search bar is closed. 
   * Added TextStyle option to the TextField
   * Added option to close the search bar when suffixIcon is tapped.

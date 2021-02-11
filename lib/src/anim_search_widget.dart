@@ -9,8 +9,8 @@ class AnimSearchBar extends StatefulWidget {
   ///  autoFocus - Boolean, isRequired : No
   ///  style - TextStyle, isRequired : No
   ///  closeSearchOnSuffixTap - bool , isRequired : No
-  ///  suffixIcon - IconData ,isRequired :  No
-  ///  prefixIcon - IconData  ,isRequired : No
+  ///  suffixIcon - Icon ,isRequired :  No
+  ///  prefixIcon - Icon  ,isRequired : No
   ///  animationDurationInMilli -  int ,isRequired : No
   ///  helpText - String ,isRequired :  No
 

@@ -25,12 +25,20 @@
      - Type: Boolean
      - <i>Optional</i>
      - Default: false
+-  autoFocus 
+     - Type: Boolean
+     - <i>Optional</i>
+     - Default: false
+-  closeOnSuffixTap 
+     - Type: Boolean
+     - <i>Optional</i>
+     - Default: false
   -  suffixIcon 
-     - Type: IconData
+     - Type: Icon
      - <i>Optional</i>
      - Default: Icons.clear
   -  prefixIcon  
-     - Type: IconData
+     - Type: Icon
      - <i>Optional</i>
      - Default: Icons.search
   -  animationDurationInMilli 

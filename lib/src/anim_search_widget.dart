@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 
 class AnimSearchBar extends StatefulWidget {
   ///  width - double ,isRequired : Yes
@@ -25,6 +26,7 @@ class AnimSearchBar extends StatefulWidget {
   final bool autoFocus;
   final TextStyle style;
   final bool closeSearchOnSuffixTap;
+  final Color color;
 
   const AnimSearchBar({
     Key key,
@@ -40,6 +42,9 @@ class AnimSearchBar extends StatefulWidget {
 
     /// The onSuffixTap cannot be null
     @required this.onSuffixTap,
+
+    /// choose your custom color
+    this.color,
     this.animationDurationInMilli = 375,
 
     /// make the search bar to open from right to left
@@ -61,6 +66,7 @@ class AnimSearchBar extends StatefulWidget {
           textController != null,
         ),
         super(key: key);
+
   @override
   _AnimSearchBarState createState() => _AnimSearchBarState();
 }
@@ -74,6 +80,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
   ///initializing the AnimationController
   AnimationController _con;
   FocusNode focusNode = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -102,7 +109,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
         width: (toggle == 0) ? 48.0 : widget.width,
         curve: Curves.easeOut,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.white ?? widget.color,
           borderRadius: BorderRadius.circular(30.0),
           boxShadow: [
             BoxShadow(
@@ -216,7 +223,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
             ///Using material widget here to get the ripple effect on the prefix icon
             Material(
-              color: Colors.white,
+              color: Colors.white ?? widget.color,
               borderRadius: BorderRadius.circular(30.0),
               child: IconButton(
                 splashRadius: 19.0,
@@ -270,3 +277,4 @@ class _AnimSearchBarState extends State<AnimSearchBar>
     );
   }
 }
+

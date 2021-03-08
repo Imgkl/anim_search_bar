@@ -53,14 +53,7 @@ class AnimSearchBar extends StatefulWidget {
 
     /// close the search on suffix tap
     this.closeSearchOnSuffixTap = false,
-  })  : assert(
-          /// The width cannot be null and double.infinity
-          width != null && width != double.infinity,
-
-          /// The textController cannot be null
-          textController != null,
-        ),
-        super(key: key);
+  }) : super(key: key);
   @override
   _AnimSearchBarState createState() => _AnimSearchBarState();
 }

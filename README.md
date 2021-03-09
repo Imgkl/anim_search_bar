@@ -1,6 +1,6 @@
 # Anim Search Bar 
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5b71a1abd5354eecbe4a99fb298c81e2)](https://app.codacy.com/gh/Imgkl/anim_search_bar?utm_source=github.com&utm_medium=referral&utm_content=Imgkl/anim_search_bar&utm_campaign=Badge_Grade_Settings)
+[![Pub version](https://img.shields.io/pub/v/anim_search_bar)](https://pub.dev/packages/anim_search_bar) &nbsp; &nbsp; &nbsp; [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5b71a1abd5354eecbe4a99fb298c81e2)](https://app.codacy.com/gh/Imgkl/anim_search_bar?utm_source=github.com&utm_medium=referral&utm_content=Imgkl/anim_search_bar&utm_campaign=Badge_Grade_Settings)
 
 #### Default
 <img src ="https://i.ibb.co/YyPgkgg/ezgif-com-gif-maker.gif">

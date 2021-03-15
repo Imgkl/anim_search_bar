@@ -17,34 +17,38 @@ class AnimSearchBar extends StatefulWidget {
 
   final double width;
   final TextEditingController textController;
-  final Icon suffixIcon;
-  final Icon prefixIcon;
+  final Icon? suffixIcon;
+  final Icon? prefixIcon;
   final String helpText;
   final int animationDurationInMilli;
   final onSuffixTap;
   final bool rtl;
   final bool autoFocus;
-  final TextStyle style;
+  final TextStyle? style;
   final bool closeSearchOnSuffixTap;
-  final Color color;
+  final Color? color;
 
   const AnimSearchBar({
-    Key key,
+    Key? key,
 
     /// The width cannot be null
-    @required this.width,
+    required this.width,
 
     /// The textController cannot be null
-    @required this.textController,
+    required this.textController,
     this.suffixIcon,
     this.prefixIcon,
     this.helpText = "Search...",
 
     /// The onSuffixTap cannot be null
+
     @required this.onSuffixTap,
 
     /// choose your custom color
     this.color,
+
+    required this.onSuffixTap,
+
     this.animationDurationInMilli = 375,
 
     /// make the search bar to open from right to left
@@ -58,14 +62,7 @@ class AnimSearchBar extends StatefulWidget {
 
     /// close the search on suffix tap
     this.closeSearchOnSuffixTap = false,
-  })  : assert(
-          /// The width cannot be null and double.infinity
-          width != null && width != double.infinity,
-
-          /// The textController cannot be null
-          textController != null,
-        ),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   _AnimSearchBarState createState() => _AnimSearchBarState();
@@ -78,7 +75,7 @@ int toggle = 0;
 class _AnimSearchBarState extends State<AnimSearchBar>
     with SingleTickerProviderStateMixin {
   ///initializing the AnimationController
-  AnimationController _con;
+  late AnimationController _con;
   FocusNode focusNode = FocusNode();
 
   @override
@@ -234,7 +231,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                 icon: widget.prefixIcon != null
                     ? toggle == 1
                         ? Icon(Icons.arrow_back_ios)
-                        : widget.prefixIcon
+                        : widget.prefixIcon!
                     : Icon(
                         toggle == 1 ? Icons.arrow_back_ios : Icons.search,
                         size: 20.0,

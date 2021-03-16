@@ -49,3 +49,6 @@
      - Type: String
       - <i>Optional</i>
       - Default: Search...
+
+### Stargazers
+[![Stargazers repo roster for @Imgkl/anim_search_bar](https://reporoster.com/stars/Imgkl/anim_search_bar)](https://github.com/Imgkl/anim_search_bar/stargazers)

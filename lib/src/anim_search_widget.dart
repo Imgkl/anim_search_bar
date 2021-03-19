@@ -40,13 +40,10 @@ class AnimSearchBar extends StatefulWidget {
     this.prefixIcon,
     this.helpText = "Search...",
 
-    /// The onSuffixTap cannot be null
-
-    @required this.onSuffixTap,
-
     /// choose your custom color
     this.color,
-
+    
+   /// The onSuffixTap cannot be null
     required this.onSuffixTap,
 
     this.animationDurationInMilli = 375,
@@ -106,7 +103,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
         width: (toggle == 0) ? 48.0 : widget.width,
         curve: Curves.easeOut,
         decoration: BoxDecoration(
-          color: Colors.white ?? widget.color,
+          color: widget.color ?? Colors.white,
           borderRadius: BorderRadius.circular(30.0),
           boxShadow: [
             BoxShadow(
@@ -220,7 +217,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
             ///Using material widget here to get the ripple effect on the prefix icon
             Material(
-              color: Colors.white ?? widget.color,
+              color: widget.color ?? Colors.white,
               borderRadius: BorderRadius.circular(30.0),
               child: IconButton(
                 splashRadius: 19.0,

@@ -1,3 +1,7 @@
+## [2.0.1]
+  * Bug fix: Text clipping issue fixed.
+  * Feature: Can add custom color for the search component. Thanks to <a href="https://github.com/kherld-hussein">Kherld-hussein</a>.
+
 ## [2.0.0]
   * Added Null Safety support
 

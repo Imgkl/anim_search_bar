@@ -1,6 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AnimSearchBar extends StatefulWidget {
   ///  width - double ,isRequired : Yes
@@ -14,6 +14,7 @@ class AnimSearchBar extends StatefulWidget {
   ///  prefixIcon - Icon  ,isRequired : No
   ///  animationDurationInMilli -  int ,isRequired : No
   ///  helpText - String ,isRequired :  No
+  /// inputFormatters - TextInputFormatter, Required - No
 
   final double width;
   final TextEditingController textController;
@@ -27,6 +28,7 @@ class AnimSearchBar extends StatefulWidget {
   final TextStyle? style;
   final bool closeSearchOnSuffixTap;
   final Color? color;
+  final List<TextInputFormatter>? inputFormatters;
 
   const AnimSearchBar({
     Key? key,
@@ -42,10 +44,9 @@ class AnimSearchBar extends StatefulWidget {
 
     /// choose your custom color
     this.color,
-    
-   /// The onSuffixTap cannot be null
-    required this.onSuffixTap,
 
+    /// The onSuffixTap cannot be null
+    required this.onSuffixTap,
     this.animationDurationInMilli = 375,
 
     /// make the search bar to open from right to left
@@ -59,6 +60,9 @@ class AnimSearchBar extends StatefulWidget {
 
     /// close the search on suffix tap
     this.closeSearchOnSuffixTap = false,
+
+    /// can add list of inputformatters to control the input
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -103,6 +107,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
         width: (toggle == 0) ? 48.0 : widget.width,
         curve: Curves.easeOut,
         decoration: BoxDecoration(
+          /// can add custom color or the color will be white
           color: widget.color ?? Colors.white,
           borderRadius: BorderRadius.circular(30.0),
           boxShadow: [
@@ -128,7 +133,8 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                 child: Container(
                   padding: EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    color: Color(0xffF2F3F7),
+                    /// can add custom color or the color will be white
+                    color: widget.color ?? Colors.white,
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   child: AnimatedBuilder(
@@ -182,14 +188,23 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                 opacity: (toggle == 0) ? 0.0 : 1.0,
                 duration: Duration(milliseconds: 200),
                 child: Container(
-                  height: 23.0,
-                  width: 180.0,
+                  padding: const EdgeInsets.only(left: 10),
+                  alignment: Alignment.topCenter,
+                  width: widget.width / 1.7,
                   child: TextField(
                     ///Text Controller. you can manipulate the text inside this textField by calling this controller.
                     controller: widget.textController,
+                    inputFormatters: widget.inputFormatters,
                     focusNode: focusNode,
                     cursorRadius: Radius.circular(10.0),
                     cursorWidth: 2.0,
+                    onEditingComplete: () {
+                      /// on editing complete the keyboard will be closed and the search bar will be closed
+                      FocusScope.of(context).unfocus();
+                      setState(() {
+                        toggle = 0;
+                      });
+                    },
 
                     ///style is of type TextStyle, the default is just a color black
                     style: widget.style != null
@@ -197,6 +212,8 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                         : TextStyle(color: Colors.black),
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(bottom: 5),
+                      isDense: true,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       labelText: widget.helpText,
                       labelStyle: TextStyle(
@@ -217,6 +234,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
             ///Using material widget here to get the ripple effect on the prefix icon
             Material(
+              /// can add custom color or the color will be white
               color: widget.color ?? Colors.white,
               borderRadius: BorderRadius.circular(30.0),
               child: IconButton(
@@ -271,4 +289,3 @@ class _AnimSearchBarState extends State<AnimSearchBar>
     );
   }
 }
-

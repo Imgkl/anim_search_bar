@@ -43,7 +43,7 @@ class AnimSearchBar extends StatefulWidget {
     this.helpText = "Search...",
 
     /// choose your custom color
-    this.color,
+    this.color = Colors.white,
 
     /// The onSuffixTap cannot be null
     required this.onSuffixTap,
@@ -108,7 +108,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
         curve: Curves.easeOut,
         decoration: BoxDecoration(
           /// can add custom color or the color will be white
-          color: widget.color ?? Colors.white,
+          color: widget.color,
           borderRadius: BorderRadius.circular(30.0),
           boxShadow: [
             BoxShadow(
@@ -134,7 +134,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                   padding: EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     /// can add custom color or the color will be white
-                    color: widget.color ?? Colors.white,
+                    color: widget.color,
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   child: AnimatedBuilder(
@@ -235,7 +235,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
             ///Using material widget here to get the ripple effect on the prefix icon
             Material(
               /// can add custom color or the color will be white
-              color: widget.color ?? Colors.white,
+              color: widget.color,
               borderRadius: BorderRadius.circular(30.0),
               child: IconButton(
                 splashRadius: 19.0,

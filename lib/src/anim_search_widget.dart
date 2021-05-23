@@ -92,6 +92,13 @@ class _AnimSearchBarState extends State<AnimSearchBar>
     );
   }
 
+  unfocusKeyboard() {
+    final FocusScopeNode currentScope = FocusScope.of(context);
+    if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -146,7 +153,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
                           ///closeSearchOnSuffixTap will execute if it's true
                           if (widget.closeSearchOnSuffixTap) {
-                            FocusScope.of(context).unfocus();
+                            unfocusKeyboard();
                             setState(() {
                               toggle = 0;
                             });
@@ -200,7 +207,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     cursorWidth: 2.0,
                     onEditingComplete: () {
                       /// on editing complete the keyboard will be closed and the search bar will be closed
-                      FocusScope.of(context).unfocus();
+                      unfocusKeyboard();
                       setState(() {
                         toggle = 0;
                       });
@@ -271,8 +278,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
                         ///if the autoFocus is true, the keyboard will close, automatically
                         setState(() {
-                          if (widget.autoFocus)
-                            FocusScope.of(context).unfocus();
+                          if (widget.autoFocus) unfocusKeyboard();
                         });
 
                         ///reverse == close

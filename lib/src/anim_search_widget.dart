@@ -29,7 +29,7 @@ class AnimSearchBar extends StatefulWidget {
   final bool closeSearchOnSuffixTap;
   final Color? color;
   final List<TextInputFormatter>? inputFormatters;
-  final Function? onSubmit;
+  final onSubmit;
 
   const AnimSearchBar(
       {Key? key,
@@ -212,6 +212,8 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     onEditingComplete: () {
                       /// on editing complete the keyboard will be closed and the search bar will be closed
                       unfocusKeyboard();
+
+                      widget.onSubmit();
                       setState(() {
                         toggle = 0;
                       });
@@ -290,9 +292,6 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                       }
                     },
                   );
-                  if (widget.onSubmit != null) {
-                    widget.onSubmit!.call();
-                  }
                 },
               ),
             ),

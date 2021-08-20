@@ -29,41 +29,45 @@ class AnimSearchBar extends StatefulWidget {
   final bool closeSearchOnSuffixTap;
   final Color? color;
   final List<TextInputFormatter>? inputFormatters;
+  final onSubmit;
 
-  const AnimSearchBar({
-    Key? key,
+  const AnimSearchBar(
+      {Key? key,
 
-    /// The width cannot be null
-    required this.width,
+      /// The width cannot be null
+      required this.width,
 
-    /// The textController cannot be null
-    required this.textController,
-    this.suffixIcon,
-    this.prefixIcon,
-    this.helpText = "Search...",
+      /// The textController cannot be null
+      required this.textController,
+      this.suffixIcon,
+      this.prefixIcon,
+      this.helpText = "Search...",
 
-    /// choose your custom color
-    this.color = Colors.white,
+      /// choose your custom color
+      this.color = Colors.white,
 
-    /// The onSuffixTap cannot be null
-    required this.onSuffixTap,
-    this.animationDurationInMilli = 375,
+      /// The onSuffixTap cannot be null
+      required this.onSuffixTap,
+      this.animationDurationInMilli = 375,
 
-    /// make the search bar to open from right to left
-    this.rtl = false,
+      /// make the search bar to open from right to left
+      this.rtl = false,
 
-    /// make the keyboard to show automatically when the searchbar is expanded
-    this.autoFocus = false,
+      /// make the keyboard to show automatically when the searchbar is expanded
+      this.autoFocus = false,
 
-    /// TextStyle of the contents inside the searchbar
-    this.style,
+      /// TextStyle of the contents inside the searchbar
+      this.style,
 
-    /// close the search on suffix tap
-    this.closeSearchOnSuffixTap = false,
+      /// close the search on suffix tap
+      this.closeSearchOnSuffixTap = false,
 
-    /// can add list of inputformatters to control the input
-    this.inputFormatters,
-  }) : super(key: key);
+      /// can add list of inputformatters to control the input
+      this.inputFormatters,
+
+      /// callback function when user submit text
+      this.onSubmit})
+      : super(key: key);
 
   @override
   _AnimSearchBarState createState() => _AnimSearchBarState();
@@ -208,6 +212,8 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     onEditingComplete: () {
                       /// on editing complete the keyboard will be closed and the search bar will be closed
                       unfocusKeyboard();
+
+                      widget.onSubmit();
                       setState(() {
                         toggle = 0;
                       });

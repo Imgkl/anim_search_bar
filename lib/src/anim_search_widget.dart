@@ -15,6 +15,7 @@ class AnimSearchBar extends StatefulWidget {
   ///  animationDurationInMilli -  int ,isRequired : No
   ///  helpText - String ,isRequired :  No
   /// inputFormatters - TextInputFormatter, Required - No
+  /// onEditingComplete - Function, Required - Yes
 
   final double width;
   final TextEditingController textController;
@@ -64,6 +65,8 @@ class AnimSearchBar extends StatefulWidget {
 
     /// can add list of inputformatters to control the input
     this.inputFormatters,
+
+    /// function of TextInputAction.done is clicked
     required this.onEditingComplete,
   }) : super(key: key);
 

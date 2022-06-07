@@ -14,7 +14,11 @@ class AnimSearchBar extends StatefulWidget {
   ///  prefixIcon - Icon  ,isRequired : No
   ///  animationDurationInMilli -  int ,isRequired : No
   ///  helpText - String ,isRequired :  No
-  /// inputFormatters - TextInputFormatter, Required - No
+  ///  inputFormatters - TextInputFormatter, Required - No
+  ///  boxShadow - bool ,isRequired : No
+  ///  textFieldColor - Color ,isRequired : No
+  ///  searchIconColor - Color ,isRequired : No
+  ///  textFieldIconColor - Color ,isRequired : No
 
   final double width;
   final TextEditingController textController;
@@ -28,7 +32,11 @@ class AnimSearchBar extends StatefulWidget {
   final TextStyle? style;
   final bool closeSearchOnSuffixTap;
   final Color? color;
+  final Color? textFieldColor;
+  final Color? searchIconColor;
+  final Color? textFieldIconColor;
   final List<TextInputFormatter>? inputFormatters;
+  final bool boxShadow;
 
   const AnimSearchBar({
     Key? key,
@@ -44,6 +52,15 @@ class AnimSearchBar extends StatefulWidget {
 
     /// choose your custom color
     this.color = Colors.white,
+
+    /// choose your custom color for the search when it is expanded
+    this.textFieldColor = Colors.white,
+
+    /// choose your custom color for the search when it is expanded
+    this.searchIconColor = Colors.black,
+
+    /// choose your custom color for the search when it is expanded
+    this.textFieldIconColor = Colors.black,
 
     /// The onSuffixTap cannot be null
     required this.onSuffixTap,
@@ -61,6 +78,9 @@ class AnimSearchBar extends StatefulWidget {
     /// close the search on suffix tap
     this.closeSearchOnSuffixTap = false,
 
+    /// enable/disable the box shadow decoration
+    this.boxShadow = true,
+
     /// can add list of inputformatters to control the input
     this.inputFormatters,
   }) : super(key: key);
@@ -72,6 +92,9 @@ class AnimSearchBar extends StatefulWidget {
 ///toggle - 0 => false or closed
 ///toggle 1 => true or open
 int toggle = 0;
+
+/// * use this variable to check current text from OnChange
+String textFieldValue = '';
 
 class _AnimSearchBarState extends State<AnimSearchBar>
     with SingleTickerProviderStateMixin {
@@ -114,17 +137,21 @@ class _AnimSearchBarState extends State<AnimSearchBar>
         width: (toggle == 0) ? 48.0 : widget.width,
         curve: Curves.easeOut,
         decoration: BoxDecoration(
-          /// can add custom color or the color will be white
-          color: widget.color,
+          /// can add custom  color or the color will be white
+          color: toggle == 1 ? widget.textFieldColor : widget.color,
           borderRadius: BorderRadius.circular(30.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              spreadRadius: -10.0,
-              blurRadius: 10.0,
-              offset: Offset(0.0, 10.0),
-            ),
-          ],
+
+          /// show boxShadow unless false was passed
+          boxShadow: !widget.boxShadow
+              ? null
+              : [
+                  BoxShadow(
+                    color: Colors.black26,
+                    spreadRadius: -10.0,
+                    blurRadius: 10.0,
+                    offset: Offset(0.0, 10.0),
+                  ),
+                ],
         ),
         child: Stack(
           children: [
@@ -151,6 +178,21 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                           ///trying to execute the onSuffixTap function
                           widget.onSuffixTap();
 
+                          // * if field empty then the user trying to close bar
+                          if (textFieldValue == '') {
+                            unfocusKeyboard();
+                            setState(() {
+                              toggle = 0;
+                            });
+
+                            ///reverse == close
+                            _con.reverse();
+                          }
+
+                          // * why not clear textfield here?
+                          widget.textController.clear();
+                          textFieldValue = '';
+
                           ///closeSearchOnSuffixTap will execute if it's true
                           if (widget.closeSearchOnSuffixTap) {
                             unfocusKeyboard();
@@ -170,6 +212,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                           : Icon(
                               Icons.close,
                               size: 20.0,
+                              color: widget.textFieldIconColor,
                             ),
                     ),
                     builder: (context, widget) {
@@ -205,6 +248,9 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     focusNode: focusNode,
                     cursorRadius: Radius.circular(10.0),
                     cursorWidth: 2.0,
+                    onChanged: (value) {
+                      textFieldValue = value;
+                    },
                     onEditingComplete: () {
                       /// on editing complete the keyboard will be closed and the search bar will be closed
                       unfocusKeyboard();
@@ -242,7 +288,8 @@ class _AnimSearchBarState extends State<AnimSearchBar>
             ///Using material widget here to get the ripple effect on the prefix icon
             Material(
               /// can add custom color or the color will be white
-              color: widget.color,
+              /// toggle button color based on toggle state
+              color: toggle == 0 ? widget.color : widget.textFieldColor,
               borderRadius: BorderRadius.circular(30.0),
               child: IconButton(
                 splashRadius: 19.0,
@@ -252,10 +299,17 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                 ///prefixIcon is of type Icon
                 icon: widget.prefixIcon != null
                     ? toggle == 1
-                        ? Icon(Icons.arrow_back_ios)
+                        ? Icon(
+                            Icons.arrow_back_ios,
+                            color: widget.textFieldIconColor,
+                          )
                         : widget.prefixIcon!
                     : Icon(
                         toggle == 1 ? Icons.arrow_back_ios : Icons.search,
+                        // search icon color when closed
+                        color: toggle == 0
+                            ? widget.searchIconColor
+                            : widget.textFieldIconColor,
                         size: 20.0,
                       ),
                 onPressed: () {

@@ -6,6 +6,7 @@ class AnimSearchBar extends StatefulWidget {
   ///  width - double ,isRequired : Yes
   ///  textController - TextEditingController  ,isRequired : Yes
   ///  onSuffixTap - Function, isRequired : Yes
+  ///  onSubmitted - Function, isRequired : Yes
   ///  rtl - Boolean, isRequired : No
   ///  autoFocus - Boolean, isRequired : No
   ///  style - TextStyle, isRequired : No
@@ -37,6 +38,7 @@ class AnimSearchBar extends StatefulWidget {
   final Color? textFieldIconColor;
   final List<TextInputFormatter>? inputFormatters;
   final bool boxShadow;
+  final Function(String) onSubmitted;
 
   const AnimSearchBar({
     Key? key,
@@ -65,6 +67,9 @@ class AnimSearchBar extends StatefulWidget {
     /// The onSuffixTap cannot be null
     required this.onSuffixTap,
     this.animationDurationInMilli = 375,
+
+    /// The onSubmitted cannot be null
+    required this.onSubmitted,
 
     /// make the search bar to open from right to left
     this.rtl = false,
@@ -250,6 +255,14 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     cursorWidth: 2.0,
                     onChanged: (value) {
                       textFieldValue = value;
+                    },
+                    onSubmitted: (value) => {
+                      widget.onSubmitted(value),
+                      unfocusKeyboard(),
+                      setState(() {
+                        toggle = 0;
+                      }),
+                      widget.textController.clear(),
                     },
                     onEditingComplete: () {
                       /// on editing complete the keyboard will be closed and the search bar will be closed

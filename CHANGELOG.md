@@ -1,3 +1,10 @@
+## [2.0.3]
+ * Added onSubmitted callback.
+ * Option to change icon colors.
+ * Option to change text area color when search bar opens.
+ * When user taps X and the search field is empty the bar closes.
+ * Thanks to<a href="https://github.com/stevenrobson"> stevenrobson</a> for this awesome PR<a href="https://github.com/Imgkl/anim_search_bar/pull/21"> #21</a>. 
+
 ## [2.0.2]
  * Fixed the keyboard unfocus issue.
 ## [2.0.1]

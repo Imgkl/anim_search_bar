@@ -12,8 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   anim_search_bar:
-
-
+    path: ../
 
 dev_dependencies:
   flutter_test:

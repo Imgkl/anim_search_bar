@@ -20,6 +20,7 @@ class AnimSearchBar extends StatefulWidget {
   ///  textFieldColor - Color ,isRequired : No
   ///  searchIconColor - Color ,isRequired : No
   ///  textFieldIconColor - Color ,isRequired : No
+  ///  textInputAction  -TextInputAction, isRequired : No
 
   final double width;
   final TextEditingController textController;
@@ -39,6 +40,7 @@ class AnimSearchBar extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final bool boxShadow;
   final Function(String) onSubmitted;
+  final TextInputAction textInputAction;
 
   const AnimSearchBar({
     Key? key,
@@ -63,6 +65,7 @@ class AnimSearchBar extends StatefulWidget {
 
     /// choose your custom color for the search when it is expanded
     this.textFieldIconColor = Colors.black,
+    this.textInputAction = TextInputAction.done,
 
     /// The onSuffixTap cannot be null
     required this.onSuffixTap,
@@ -251,6 +254,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     controller: widget.textController,
                     inputFormatters: widget.inputFormatters,
                     focusNode: focusNode,
+                    textInputAction: widget.textInputAction,
                     cursorRadius: Radius.circular(10.0),
                     cursorWidth: 2.0,
                     onChanged: (value) {

@@ -22,6 +22,7 @@ class AnimSearchBar extends StatefulWidget {
   ///  textFieldIconColor - Color ,isRequired : No
 
   final double width;
+  final double height;
   final TextEditingController textController;
   final Icon? suffixIcon;
   final Icon? prefixIcon;
@@ -51,7 +52,10 @@ class AnimSearchBar extends StatefulWidget {
     this.suffixIcon,
     this.prefixIcon,
     this.helpText = "Search...",
-
+    
+    /// Height of wrapper container
+    this.height = 100,
+    
     /// choose your custom color
     this.color = Colors.white,
 
@@ -70,7 +74,7 @@ class AnimSearchBar extends StatefulWidget {
 
     /// The onSubmitted cannot be null
     required this.onSubmitted,
-
+    
     /// make the search bar to open from right to left
     this.rtl = false,
 
@@ -130,7 +134,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100.0,
+      height: height,
 
       ///if the rtl is true, search bar will be from right to left
       alignment: widget.rtl ? Alignment.centerRight : Alignment(-1.0, 0.0),

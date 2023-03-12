@@ -39,6 +39,11 @@ class _AppState extends State<App> {
             textController.clear();
           });
         },
+        rtl: true,
+        onSubmitted: (String value) {
+          debugPrint("onSubmitted value: " + value);
+        },
+        textInputAction: TextInputAction.search,
       ),
     );
   }

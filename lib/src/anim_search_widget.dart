@@ -137,7 +137,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: widget.height,
+      height: widget.height,
 
       ///if the rtl is true, search bar will be from right to left
       alignment: widget.rtl ? Alignment.centerRight : Alignment(-1.0, 0.0),

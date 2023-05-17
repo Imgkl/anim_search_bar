@@ -42,13 +42,13 @@ class AnimSearchBar extends StatefulWidget {
   final bool boxShadow;
   final Function(String) onSubmitted;
   final TextInputAction textInputAction;
-
+  final Function(int) searchBarOpen;
   const AnimSearchBar({
     Key? key,
 
     /// The width cannot be null
     required this.width,
-
+    required this.searchBarOpen,
     /// The textController cannot be null
     required this.textController,
     this.suffixIcon,
@@ -137,7 +137,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height,
+      height: widget.height,
 
       ///if the rtl is true, search bar will be from right to left
       alignment: widget.rtl ? Alignment.centerRight : Alignment(-1.0, 0.0),
@@ -145,7 +145,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
       ///Using Animated container to expand and shrink the widget
       child: AnimatedContainer(
         duration: Duration(milliseconds: widget.animationDurationInMilli),
-        height: 48.0,
+        height: widget.height,
         width: (toggle == 0) ? 48.0 : widget.width,
         curve: Curves.easeOut,
         decoration: BoxDecoration(
@@ -360,7 +360,9 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                         _con.reverse();
                       }
                     },
+
                   );
+                  widget.searchBarOpen(toggle);
                 },
               ),
             ),

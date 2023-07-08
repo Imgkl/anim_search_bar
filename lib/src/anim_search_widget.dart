@@ -131,6 +131,12 @@ class _AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProvider
   }
 
   @override
+  void dispose() {
+    _con.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: 100.0,

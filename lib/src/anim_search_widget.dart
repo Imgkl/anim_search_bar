@@ -20,10 +20,8 @@ class AnimSearchBar extends StatefulWidget {
   ///  textFieldColor - Color ,isRequired : No
   ///  searchIconColor - Color ,isRequired : No
   ///  textFieldIconColor - Color ,isRequired : No
-  ///  textInputAction  -TextInputAction, isRequired : No
 
   final double width;
-  final double height;
   final TextEditingController textController;
   final Icon? suffixIcon;
   final Icon? prefixIcon;
@@ -41,23 +39,20 @@ class AnimSearchBar extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final bool boxShadow;
   final Function(String) onSubmitted;
-  final TextInputAction textInputAction;
-  final Function(int) searchBarOpen;
+  final Function(String) onChanged;
+
   const AnimSearchBar({
     Key? key,
 
     /// The width cannot be null
     required this.width,
-    required this.searchBarOpen,
+
     /// The textController cannot be null
     required this.textController,
     this.suffixIcon,
     this.prefixIcon,
     this.helpText = "Search...",
-    
-    /// Height of wrapper container
-    this.height = 100,
-    
+
     /// choose your custom color
     this.color = Colors.white,
 
@@ -69,7 +64,6 @@ class AnimSearchBar extends StatefulWidget {
 
     /// choose your custom color for the search when it is expanded
     this.textFieldIconColor = Colors.black,
-    this.textInputAction = TextInputAction.done,
 
     /// The onSuffixTap cannot be null
     required this.onSuffixTap,
@@ -77,7 +71,10 @@ class AnimSearchBar extends StatefulWidget {
 
     /// The onSubmitted cannot be null
     required this.onSubmitted,
-    
+
+    /// The onSubmitted cannot be null
+    required this.onChanged,
+
     /// make the search bar to open from right to left
     this.rtl = false,
 
@@ -108,8 +105,7 @@ int toggle = 0;
 /// * use this variable to check current text from OnChange
 String textFieldValue = '';
 
-class _AnimSearchBarState extends State<AnimSearchBar>
-    with SingleTickerProviderStateMixin {
+class _AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderStateMixin {
   ///initializing the AnimationController
   late AnimationController _con;
   FocusNode focusNode = FocusNode();
@@ -135,9 +131,15 @@ class _AnimSearchBarState extends State<AnimSearchBar>
   }
 
   @override
+  void dispose() {
+    _con.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      height: widget.height,
+      height: 100.0,
 
       ///if the rtl is true, search bar will be from right to left
       alignment: widget.rtl ? Alignment.centerRight : Alignment(-1.0, 0.0),
@@ -145,7 +147,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
       ///Using Animated container to expand and shrink the widget
       child: AnimatedContainer(
         duration: Duration(milliseconds: widget.animationDurationInMilli),
-        height: widget.height,
+        height: 48.0,
         width: (toggle == 0) ? 48.0 : widget.width,
         curve: Curves.easeOut,
         decoration: BoxDecoration(
@@ -258,11 +260,11 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     controller: widget.textController,
                     inputFormatters: widget.inputFormatters,
                     focusNode: focusNode,
-                    textInputAction: widget.textInputAction,
                     cursorRadius: Radius.circular(10.0),
                     cursorWidth: 2.0,
                     onChanged: (value) {
                       textFieldValue = value;
+                      widget.onChanged(value);
                     },
                     onSubmitted: (value) => {
                       widget.onSubmitted(value),
@@ -281,9 +283,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     },
 
                     ///style is of type TextStyle, the default is just a color black
-                    style: widget.style != null
-                        ? widget.style
-                        : TextStyle(color: Colors.black),
+                    style: widget.style != null ? widget.style : TextStyle(color: Colors.black),
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(bottom: 5),
@@ -328,9 +328,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     : Icon(
                         toggle == 1 ? Icons.arrow_back_ios : Icons.search,
                         // search icon color when closed
-                        color: toggle == 0
-                            ? widget.searchIconColor
-                            : widget.textFieldIconColor,
+                        color: toggle == 0 ? widget.searchIconColor : widget.textFieldIconColor,
                         size: 20.0,
                       ),
                 onPressed: () {
@@ -341,8 +339,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                         toggle = 1;
                         setState(() {
                           ///if the autoFocus is true, the keyboard will pop open, automatically
-                          if (widget.autoFocus)
-                            FocusScope.of(context).requestFocus(focusNode);
+                          if (widget.autoFocus) FocusScope.of(context).requestFocus(focusNode);
                         });
 
                         ///forward == expand
@@ -360,9 +357,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                         _con.reverse();
                       }
                     },
-
                   );
-                  widget.searchBarOpen(toggle);
                 },
               ),
             ),

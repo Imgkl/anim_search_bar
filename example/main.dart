@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +46,9 @@ class _AppState extends State<App> {
           debugPrint("onSubmitted value: " + value);
         },
         textInputAction: TextInputAction.search,
+        searchBarOpen: (int value) {
+          log(value.toString());
+        },
       ),
     );
   }

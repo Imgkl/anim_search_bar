@@ -118,7 +118,8 @@ class _AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-    widget.searchBarOpen(0);
+    toggle = 0;
+    widget.searchBarOpen(toggle);
 
     ///Initializing the animationController which is responsible for the expanding and shrinking of the search bar
     _con = AnimationController(

@@ -21,7 +21,7 @@ class AnimSearchBar extends StatefulWidget {
   ///  searchIconColor - Color ,isRequired : No
   ///  textFieldIconColor - Color ,isRequired : No
   ///  textInputAction  -TextInputAction, isRequired : No
-
+  ///
   final double width;
   final double height;
   final TextEditingController textController;
@@ -43,9 +43,10 @@ class AnimSearchBar extends StatefulWidget {
   final Function(String) onSubmitted;
   final TextInputAction textInputAction;
   final Function(int) searchBarOpen;
-
-  const AnimSearchBar({
+  int toggle;
+  AnimSearchBar({
     Key? key,
+    this.toggle = 0,
 
     /// The width cannot be null
     required this.width,
@@ -97,7 +98,7 @@ class AnimSearchBar extends StatefulWidget {
 
     /// can add list of inputformatters to control the input
     this.inputFormatters,
-  }) : super(key: key);
+  }) : super(key: key) {}
 
   @override
   _AnimSearchBarState createState() => _AnimSearchBarState();
@@ -105,7 +106,7 @@ class AnimSearchBar extends StatefulWidget {
 
 ///toggle - 0 => false or closed
 ///toggle 1 => true or open
-int toggle = 0;
+late int toggle;
 
 /// * use this variable to check current text from OnChange
 String textFieldValue = '';
@@ -118,8 +119,7 @@ class _AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-    toggle = 0;
-    widget.searchBarOpen(toggle);
+    toggle = widget.toggle;
 
     ///Initializing the animationController which is responsible for the expanding and shrinking of the search bar
     _con = AnimationController(

@@ -192,7 +192,7 @@ class _AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProvider
                           widget.onSuffixTap();
 
                           // * if field empty then the user trying to close bar
-                          if (textFieldValue == '') {
+                          if (textFieldValue == '' && widget.closeSearchOnSuffixTap) {
                             unfocusKeyboard();
                             setState(() {
                               toggle = 0;
